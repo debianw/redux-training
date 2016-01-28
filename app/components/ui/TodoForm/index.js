@@ -28,6 +28,7 @@ export default class TodoItem extends Component {
           </Col>
           <Col xs={12}>
             <Button
+              type="submit"
               className="new-todo-button"
               disabled={!this._getInputValue().length}>Add Todo</Button>
           </Col>
@@ -44,7 +45,8 @@ export default class TodoItem extends Component {
     this.setState({ newTodoText : e.target.value });
   };
 
-  _onSubmit = () => {
+  _onSubmit = (e) => {
+    e.preventDefault();
     const value = this._getInputValue();
 
     if (!value) {
