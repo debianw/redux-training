@@ -1,6 +1,6 @@
 // Third party.
-import React, { Component, PropTypes }    from 'react';
-import { Row, Col, Input, Button, Alert, ListGroup, ListGroupItem } from 'react-bootstrap';
+import React, { Component, PropTypes }                                     from 'react';
+import { Row, Col, Input, Button, Alert, ListGroup, ListGroupItem, Label } from 'react-bootstrap';
 
 // Assets.
 import './style.scss';
@@ -21,7 +21,11 @@ export default class Todos extends Component {
 
   renderTodoItem (todo) {
     return (
-      <ListGroupItem key={todo.id}>{todo.text}</ListGroupItem>
+      <ListGroupItem key={todo.id}>
+        <Label>{ todo.completed ? 'Completed' : 'Pending' }</Label>
+        {' '}
+        {todo.text}
+      </ListGroupItem>
     );
   }
 
