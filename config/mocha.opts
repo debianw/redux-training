@@ -1,0 +1,4 @@
+--require babel-core/register ./config/test_helper
+--full-trace
+--recursive ./app/**/test.js
+--compilers css:./config/null-compiler.js
