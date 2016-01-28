@@ -40,5 +40,5 @@ describe('COMPONENT: <TodoForm />', () => {
     component.setState({ newTodoText : 'Adding todo' });
     TestUtils.Simulate.submit(newTodoForm);
     expect(actions.onAddTodo).toHaveBeenCalledWith({ text : 'Adding todo' });
-  })
+  });
 });
