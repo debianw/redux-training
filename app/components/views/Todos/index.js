@@ -8,8 +8,9 @@ import './style.scss';
 export default class Todos extends Component {
 
   static propTypes = {
-    addTodo : PropTypes.func,
-    todos   : PropTypes.array,
+    addTodo    : PropTypes.func,
+    todos      : PropTypes.array,
+    toggleTodo : PropTypes.func,
   };
 
   constructor (props) {
@@ -19,17 +20,20 @@ export default class Todos extends Component {
     };
   }
 
-  renderTodoItem (todo) {
+  renderTodoItem = (todo) => {
     return (
-      <ListGroupItem key={todo.id}>
-        <Label>{ todo.completed ? 'Completed' : 'Pending' }</Label>
-        {' '}
-        {todo.text}
+      <ListGroupItem
+        className={todo.completed && 'completed'}
+        key={todo.id}
+        onClick={this._onToggleTodo.bind(this, todo.id)}>
+          <Label>{ todo.completed ? 'Completed' : 'Pending' }</Label>
+          {' '}
+          {todo.text}
       </ListGroupItem>
     );
-  }
+  };
 
-  renderTodoList (todos) {
+  renderTodoList = (todos) => {
     if (!todos.length) {
       return (
         <Alert>Have some fun! You have not todos.</Alert>
@@ -39,7 +43,7 @@ export default class Todos extends Component {
     return (
       <ListGroup>{todos.map(this.renderTodoItem)}</ListGroup>
     );
-  }
+  };
 
   render () {
     const { todos } = this.props;
@@ -85,6 +89,10 @@ export default class Todos extends Component {
       this.props.addTodo({ text : this.refs.newTodoText.getValue() });
       this.setState({ newTodoText : '' });
     }
+  };
+
+  _onToggleTodo = (id) => {
+    this.props.toggleTodo({ id });
   };
 
 }

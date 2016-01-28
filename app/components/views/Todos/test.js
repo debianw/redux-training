@@ -3,7 +3,8 @@ import TodosView from './';
 
 function setup (todos = []) {
   const actions = {
-    addTodo : expect.createSpy(),
+    addTodo    : expect.createSpy(),
+    toggleTodo : expect.createSpy(),
   };
 
   const component = TestUtils.renderIntoDocument(
@@ -13,11 +14,12 @@ function setup (todos = []) {
   );
 
   return {
-    newTodoText     : TestUtils.findRenderedDOMComponentWithClass(component, 'new-todo-text'),
-    newTodoButton   : TestUtils.findRenderedDOMComponentWithClass(component, 'new-todo-button'),
-    todosDiv        : TestUtils.findRenderedDOMComponentWithClass(component, 'todo-list'),
-    todoItems       : TestUtils.scryRenderedDOMComponentsWithClass(component, 'list-group-item'),
-    todoStateLabels : TestUtils.scryRenderedDOMComponentsWithClass(component, 'label'),
+    newTodoText        : TestUtils.findRenderedDOMComponentWithClass(component, 'new-todo-text'),
+    newTodoButton      : TestUtils.findRenderedDOMComponentWithClass(component, 'new-todo-button'),
+    todosDiv           : TestUtils.findRenderedDOMComponentWithClass(component, 'todo-list'),
+    todoItems          : TestUtils.scryRenderedDOMComponentsWithClass(component, 'list-group-item'),
+    todoItemsCompleted : TestUtils.scryRenderedDOMComponentsWithClass(component, 'list-group-item completed'),
+    todoStateLabels    : TestUtils.scryRenderedDOMComponentsWithClass(component, 'label'),
     component,
     actions,
   };
@@ -70,6 +72,33 @@ describe('VIEW: Todos', () => {
       }]);
 
       expect(todoStateLabels[1].textContent).toBe('Completed');
+    });
+
+    it('should disable the completed todos', () => {
+      const { todoItemsCompleted } = setup([{
+        id   : 1,
+        text : 'Grab some coffee',
+      }, {
+        id        : 2,
+        text      : 'Master React',
+        completed : true,
+      }]);
+
+      expect(todoItemsCompleted.length).toBe(1);
+      expect(todoItemsCompleted[0].textContent).toBe('Completed Master React');
+    });
+
+    it('should toggle a todo when clicking the item', () => {
+      const { todoItems, actions } = setup([{
+        id   : 1,
+        text : 'Grab some coffee',
+      }, {
+        id   : 2,
+        text : 'Master React',
+      }]);
+
+      TestUtils.Simulate.click(todoItems[1]);
+      expect(actions.toggleTodo).toHaveBeenCalledWith({ id : 2 });
     });
   });
 
