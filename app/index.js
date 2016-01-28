@@ -1,8 +1,8 @@
 // Third party.
-import React             from 'react';
-import { render }        from 'react-dom';
-import { Router, Route } from 'react-router';
-import { Provider }      from 'react-redux';
+import React                         from 'react';
+import { render }                    from 'react-dom';
+import { Router, Route, IndexRoute } from 'react-router';
+import { Provider }                  from 'react-redux';
 
 // Setup stores.
 import setupStores from 'utils/setupStores';
@@ -21,6 +21,7 @@ render((
       <Route path="/" component={AppView}>
         <Route path="counter" component={CounterContainer} />
         <Route path="todos" component={TodosContainer} />
+        <IndexRoute component={CounterContainer} />
       </Route>
     </Router>
   </Provider>

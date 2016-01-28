@@ -22,7 +22,9 @@ export default class AppView extends Component {
       <div className="app">
         <Navbar>
           <Header>
-            <Brand>Redux training</Brand>
+            <Brand>
+              <Link to="/">Redux training</Link>
+            </Brand>
             <Toggle />
           </Header>
           <Collapse>
