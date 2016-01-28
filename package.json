@@ -6,7 +6,7 @@
   "scripts": {
     "build": "NODE_ENV=production webpack --config ./config/webpack.config.prod.js",
     "ci": "NODE_PATH=app mocha --opts ./config/mocha.opts --watch",
-    "dev": "webpack-dev-server --port 3000 --devtool eval --config ./config/webpack.config.dev.js --progress --colors --hot --content-base build",
+    "dev": "webpack-dev-server --history-api-fallback --port 3000 --devtool eval --config ./config/webpack.config.dev.js --progress --colors --hot --content-base build",
     "prod": "npm run build && http-server ./build -p 3000",
     "test": "npm run validate && NODE_PATH=app mocha --opts ./config/mocha.opts",
     "validate": "eslint ./app && sass-lint -v -c ./config/sass-lint.yml"

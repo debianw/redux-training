@@ -3,6 +3,7 @@ import React                         from 'react';
 import { render }                    from 'react-dom';
 import { Router, Route, IndexRoute } from 'react-router';
 import { Provider }                  from 'react-redux';
+import createBrowserHistory          from 'history/lib/createBrowserHistory';
 
 // Setup stores.
 import setupStores from 'utils/setupStores';
@@ -17,7 +18,7 @@ const store = setupStores({});
 
 render((
   <Provider store={store}>
-    <Router>
+    <Router history={createBrowserHistory()}>
       <Route path="/" component={AppView}>
         <Route path="counter" component={CounterContainer} />
         <Route path="todos" component={TodosContainer} />
