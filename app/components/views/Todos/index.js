@@ -23,10 +23,11 @@ export default class Todos extends Component {
   renderTodoItem = (todo) => {
     return (
       <ListGroupItem
-        className={todo.completed && 'completed'}
+        className={todo.completed && 'completed' || ''}
         key={todo.id}
         onClick={this._onToggleTodo.bind(this, todo.id)}>
-          <Label>{ todo.completed ? 'Completed' : 'Pending' }</Label>
+          <Label
+            bsStyle={todo.completed && 'success' || 'info'}>{ todo.completed ? 'Completed' : 'Pending' }</Label>
           {' '}
           {todo.text}
       </ListGroupItem>
@@ -55,7 +56,6 @@ export default class Todos extends Component {
           <Input
             className="new-todo-text"
             type="text"
-            ref="newTodoText"
             value={this.state.newTodoText}
             onChange={this._handleInputChange}
             onKeyDown={this._handleKeyDown} />
@@ -70,9 +70,9 @@ export default class Todos extends Component {
     );
   }
 
-  _handleInputChange = () => {
+  _handleInputChange = (e) => {
     this.setState({
-      newTodoText : this.refs.newTodoText.getValue(),
+      newTodoText : e.target.value,
     });
   };
 
@@ -83,10 +83,10 @@ export default class Todos extends Component {
   };
 
   _onAddTodo = () => {
-    const value = this.refs.newTodoText.getValue().trim();
+    const value = this.state.newTodoText.trim();
 
     if (value) {
-      this.props.addTodo({ text : this.refs.newTodoText.getValue() });
+      this.props.addTodo({ text : value });
       this.setState({ newTodoText : '' });
     }
   };

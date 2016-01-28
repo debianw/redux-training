@@ -1,7 +1,7 @@
 // Third party.
 import React, { Component, PropTypes } from 'react';
 import { Link }                        from 'react-router';
-import { Navbar, Grid }                from 'react-bootstrap';
+import { Navbar, Grid, Row, Col }      from 'react-bootstrap';
 
 // Redux DevTools.
 import DevTools from 'components/containers/DevTools';
@@ -30,7 +30,16 @@ export default class AppView extends Component {
             <Text><Link to="todos">Todo List</Link></Text>
           </Collapse>
         </Navbar>
-        <Grid>{this.props.children}</Grid>
+        <Grid>
+          <Row>
+            <Col xs={12}>{this.props.children}</Col>
+          </Row>
+          <Row>
+            <Col xs={12} className="app__footer">
+              Made by Kevin Wolf - Fork on <a href="//github.com/kevin-wolf/redux-training" target="_blank">github</a>.
+            </Col>
+          </Row>
+        </Grid>
         {process.env.NODE_ENV === 'development' && <DevTools />}
       </div>
     );

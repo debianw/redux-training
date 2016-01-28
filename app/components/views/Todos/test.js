@@ -14,12 +14,13 @@ function setup (todos = []) {
   );
 
   return {
-    newTodoText        : TestUtils.findRenderedDOMComponentWithClass(component, 'new-todo-text'),
-    newTodoButton      : TestUtils.findRenderedDOMComponentWithClass(component, 'new-todo-button'),
-    todosDiv           : TestUtils.findRenderedDOMComponentWithClass(component, 'todo-list'),
-    todoItems          : TestUtils.scryRenderedDOMComponentsWithClass(component, 'list-group-item'),
-    todoItemsCompleted : TestUtils.scryRenderedDOMComponentsWithClass(component, 'list-group-item completed'),
-    todoStateLabels    : TestUtils.scryRenderedDOMComponentsWithClass(component, 'label'),
+    newTodoText           : TestUtils.findRenderedDOMComponentWithClass(component, 'new-todo-text'),
+    newTodoButton         : TestUtils.findRenderedDOMComponentWithClass(component, 'new-todo-button'),
+    todosDiv              : TestUtils.findRenderedDOMComponentWithClass(component, 'todo-list'),
+    todoItems             : TestUtils.scryRenderedDOMComponentsWithClass(component, 'list-group-item'),
+    todoItemsCompleted    : TestUtils.scryRenderedDOMComponentsWithClass(component, 'list-group-item completed'),
+    todoCompletedLabels   : TestUtils.scryRenderedDOMComponentsWithClass(component, 'label label-success'),
+    todoUncompletedLabels : TestUtils.scryRenderedDOMComponentsWithClass(component, 'label label-info'),
     component,
     actions,
   };
@@ -49,7 +50,7 @@ describe('VIEW: Todos', () => {
     });
 
     it('should display a [Pending] label for uncompleted todos', () => {
-      const { todoStateLabels } = setup([{
+      const { todoUncompletedLabels } = setup([{
         id   : 1,
         text : 'Grab some coffee',
       }, {
@@ -58,20 +59,26 @@ describe('VIEW: Todos', () => {
         completed : true,
       }]);
 
-      expect(todoStateLabels[0].textContent).toBe('Pending');
+      expect(todoUncompletedLabels.length).toBe(1);
+      expect(todoUncompletedLabels[0].textContent).toBe('Pending');
     });
 
     it('should display a [Completed] label for completed todos', () => {
-      const { todoStateLabels } = setup([{
+      const { todoCompletedLabels } = setup([{
         id   : 1,
         text : 'Grab some coffee',
       }, {
         id        : 2,
         text      : 'Master React',
         completed : true,
+      }, {
+        id        : 3,
+        text      : 'Do some Unit Tests',
+        completed : true,
       }]);
 
-      expect(todoStateLabels[1].textContent).toBe('Completed');
+      expect(todoCompletedLabels.length).toBe(2);
+      expect(todoCompletedLabels[0].textContent).toBe('Completed');
     });
 
     it('should disable the completed todos', () => {
