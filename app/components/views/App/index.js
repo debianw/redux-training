@@ -34,6 +34,7 @@ export default class AppView extends Component {
           <Row>
             <Col xs={12}>{this.props.children}</Col>
           </Row>
+          <hr />
           <Row>
             <Col xs={12} className="app__footer">
               Made by Kevin Wolf - Fork on <a href="//github.com/kevin-wolf/redux-training" target="_blank">github</a>.
