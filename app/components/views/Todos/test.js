@@ -3,7 +3,8 @@ import TodosView from './';
 
 function setup (todos = []) {
   const actions = {
-    addTodo : expect.createSpy(),
+    addTodo    : expect.createSpy(),
+    toggleTodo : expect.createSpy(),
   };
 
   const component = TestUtils.renderIntoDocument(
@@ -13,33 +14,92 @@ function setup (todos = []) {
   );
 
   return {
-    newTodoText   : TestUtils.findRenderedDOMComponentWithClass(component, 'new-todo-text'),
-    newTodoButton : TestUtils.findRenderedDOMComponentWithClass(component, 'new-todo-button'),
-    todosDiv      : TestUtils.findRenderedDOMComponentWithClass(component, 'todo-list'),
-    todoItems     : TestUtils.scryRenderedDOMComponentsWithClass(component, 'list-group-item'),
+    newTodoText        : TestUtils.findRenderedDOMComponentWithClass(component, 'new-todo-text'),
+    newTodoButton      : TestUtils.findRenderedDOMComponentWithClass(component, 'new-todo-button'),
+    todosDiv           : TestUtils.findRenderedDOMComponentWithClass(component, 'todo-list'),
+    todoItems          : TestUtils.scryRenderedDOMComponentsWithClass(component, 'list-group-item'),
+    todoItemsCompleted : TestUtils.scryRenderedDOMComponentsWithClass(component, 'list-group-item completed'),
+    todoStateLabels    : TestUtils.scryRenderedDOMComponentsWithClass(component, 'label'),
     component,
     actions,
   };
 }
 
 describe('VIEW: Todos', () => {
-  it('should display a message when props.todos is empty', () => {
-    const { todosDiv } = setup();
-    expect(todosDiv.textContent).toBe('Have some fun! You have not todos.');
+  describe('when props.todos is empty', () => {
+    it('should display a message', () => {
+      const { todosDiv } = setup();
+      expect(todosDiv.textContent).toBe('Have some fun! You have not todos.');
+    });
   });
 
-  it('should display a list of todos when props.todos is populated', () => {
-    const { todoItems } = setup([{
-      id   : 1,
-      text : 'Grab some coffee',
-    }, {
-      id   : 2,
-      text : 'Master React',
-    }]);
+  describe('props.todos is populated', () => {
+    it('should display a list of todos', () => {
+      const { todoItems } = setup([{
+        id   : 1,
+        text : 'Grab some coffee',
+      }, {
+        id   : 2,
+        text : 'Master React',
+      }]);
 
-    expect(todoItems.length).toBe(2);
-    expect(todoItems[0].textContent).toBe('Grab some coffee');
-    expect(todoItems[1].textContent).toBe('Master React');
+      expect(todoItems.length).toBe(2);
+      expect(todoItems[0].textContent).toBe('Pending Grab some coffee');
+      expect(todoItems[1].textContent).toBe('Pending Master React');
+    });
+
+    it('should display a [Pending] label for uncompleted todos', () => {
+      const { todoStateLabels } = setup([{
+        id   : 1,
+        text : 'Grab some coffee',
+      }, {
+        id        : 2,
+        text      : 'Master React',
+        completed : true,
+      }]);
+
+      expect(todoStateLabels[0].textContent).toBe('Pending');
+    });
+
+    it('should display a [Completed] label for completed todos', () => {
+      const { todoStateLabels } = setup([{
+        id   : 1,
+        text : 'Grab some coffee',
+      }, {
+        id        : 2,
+        text      : 'Master React',
+        completed : true,
+      }]);
+
+      expect(todoStateLabels[1].textContent).toBe('Completed');
+    });
+
+    it('should disable the completed todos', () => {
+      const { todoItemsCompleted } = setup([{
+        id   : 1,
+        text : 'Grab some coffee',
+      }, {
+        id        : 2,
+        text      : 'Master React',
+        completed : true,
+      }]);
+
+      expect(todoItemsCompleted.length).toBe(1);
+      expect(todoItemsCompleted[0].textContent).toBe('Completed Master React');
+    });
+
+    it('should toggle a todo when clicking the item', () => {
+      const { todoItems, actions } = setup([{
+        id   : 1,
+        text : 'Grab some coffee',
+      }, {
+        id   : 2,
+        text : 'Master React',
+      }]);
+
+      TestUtils.Simulate.click(todoItems[1]);
+      expect(actions.toggleTodo).toHaveBeenCalledWith({ id : 2 });
+    });
   });
 
   it('should add a todo when clicking the button and clean the input', () => {
