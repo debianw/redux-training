@@ -1,9 +1,13 @@
 // Third party.
-import React, { Component, PropTypes }                                     from 'react';
-import { Row, Col, Input, Button, Alert, ListGroup, ListGroupItem, Label } from 'react-bootstrap';
+import React, { Component, PropTypes } from 'react';
+import { Row, Col, Alert }             from 'react-bootstrap';
 
 // Assets.
 import './style.scss';
+
+// UI components.
+import TodoForm from 'components/ui/TodoForm';
+import TodoList from 'components/ui/TodoList';
 
 export default class Todos extends Component {
 
@@ -11,27 +15,6 @@ export default class Todos extends Component {
     addTodo    : PropTypes.func,
     todos      : PropTypes.array,
     toggleTodo : PropTypes.func,
-  };
-
-  constructor (props) {
-    super(props);
-    this.state = {
-      newTodoText : '',
-    };
-  }
-
-  renderTodoItem = (todo) => {
-    return (
-      <ListGroupItem
-        className={todo.completed && 'completed' || ''}
-        key={todo.id}
-        onClick={this._onToggleTodo.bind(this, todo.id)}>
-          <Label
-            bsStyle={todo.completed && 'success' || 'info'}>{ todo.completed ? 'Completed' : 'Pending' }</Label>
-          {' '}
-          {todo.text}
-      </ListGroupItem>
-    );
   };
 
   renderTodoList = (todos) => {
@@ -42,7 +25,7 @@ export default class Todos extends Component {
     }
 
     return (
-      <ListGroup>{todos.map(this.renderTodoItem)}</ListGroup>
+      <TodoList todos={todos} onToggleTodo={this.props.toggleTodo} />
     );
   };
 
@@ -52,47 +35,10 @@ export default class Todos extends Component {
     return (
       <Row>
         <Col xs={12}><h2>Todos</h2></Col>
-        <Col xs={12}>
-          <Input
-            className="new-todo-text"
-            type="text"
-            value={this.state.newTodoText}
-            onChange={this._handleInputChange}
-            onKeyDown={this._handleKeyDown} />
-        </Col>
-        <Col xs={12}>
-          <Button
-            className="new-todo-button"
-            onClick={this._onAddTodo}>Add Todo</Button>
-        </Col>
+        <Col xs={12}><TodoForm onAddTodo={this.props.addTodo} /></Col>
         <Col xs={12} className="todo-list">{this.renderTodoList(todos)}</Col>
       </Row>
     );
   }
-
-  _handleInputChange = (e) => {
-    this.setState({
-      newTodoText : e.target.value,
-    });
-  };
-
-  _handleKeyDown = (e) => {
-    if (e.keyCode === 13) {
-      this._onAddTodo();
-    }
-  };
-
-  _onAddTodo = () => {
-    const value = this.state.newTodoText.trim();
-
-    if (value) {
-      this.props.addTodo({ text : value });
-      this.setState({ newTodoText : '' });
-    }
-  };
-
-  _onToggleTodo = (id) => {
-    this.props.toggleTodo({ id });
-  };
 
 }
