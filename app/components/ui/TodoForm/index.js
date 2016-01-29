@@ -2,7 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Row, Col, Input, Button }     from 'react-bootstrap';
 
-export default class TodoItem extends Component {
+export default class TodoForm extends Component {
 
   static propTypes = {
     onAddTodo : PropTypes.func,
