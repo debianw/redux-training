@@ -3,9 +3,6 @@ import React, { Component, PropTypes } from 'react';
 import { Link }                        from 'react-router';
 import { Navbar, Grid, Row, Col }      from 'react-bootstrap';
 
-// Redux DevTools.
-import DevTools from 'components/containers/DevTools';
-
 // Assets.
 import './style.scss';
 
@@ -43,7 +40,6 @@ export default class AppView extends Component {
             </Col>
           </Row>
         </Grid>
-        {process.env.NODE_ENV === 'development' && <DevTools />}
       </div>
     );
   }

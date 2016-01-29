@@ -12,8 +12,6 @@ This a playground repo that I did based on [this amazing course](https://egghead
 ## Development
 To start hacking into this app, first run `npm install` to grab all the dependencies. Then start the dev server with `npm run dev`.
 
-When you start the `dev` environment, you will see the [Redux DevTools](https://github.com/gaearon/redux-devtools) stacked in your app. You can hide it with `control+h` or change its position with `control+q`.
-
 ## Testing
 You can test the app by running `npm test` - that will lint your `sass` and `js` files and then run the tests. If you want to run your tests continuosly, then run `npm run ci`.
 
