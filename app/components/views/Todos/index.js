@@ -63,7 +63,7 @@ export default class Todos extends Component {
               activeFilter={visibilityFilter}
               onSetFilter={this.props.setFilter}>Completed</ChangeFilter>
           </Col>
-          <Col xs={12}><TodoList todos={getVisibleTodos()} onToggleTodo={this.props.toggleTodo} /></Col>
+          <Col xs={12}><TodoList todos={getVisibleTodos()} onTodoClick={this.props.toggleTodo} /></Col>
         </Row>
       );
     }

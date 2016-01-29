@@ -8,8 +8,8 @@ import TodoItem from 'components/ui/TodoItem';
 export default class TodoList extends Component {
 
   static propTypes = {
-    todos        : PropTypes.array,
-    onToggleTodo : PropTypes.func,
+    todos       : PropTypes.array,
+    onTodoClick : PropTypes.func,
   };
 
   render () {
@@ -18,7 +18,7 @@ export default class TodoList extends Component {
         <TodoItem
           key={todo.id}
           {...todo}
-          onClick={this._toggleTodoHandler.bind(null, todo.id)} />
+          onClick={() => this.props.onTodoClick(todo.id)} />
       );
     });
 
@@ -30,9 +30,5 @@ export default class TodoList extends Component {
       <ListGroup>{todoItems}</ListGroup>
     );
   }
-
-  _toggleTodoHandler = (id) => {
-    this.props.onToggleTodo({ id });
-  };
 
 }

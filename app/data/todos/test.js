@@ -12,7 +12,7 @@ describe('DATA: Todos', () => {
     let action;
 
     it(`should send ${constants.TODOS_ADD} to the reducer`, () => {
-      action = todosActions.addTodo({ text : 'Learn Redux' });
+      action = todosActions.addTodo('Learn Redux');
       expect(action).toEqual({
         type : constants.TODOS_ADD,
         text : 'Learn Redux',
@@ -35,7 +35,7 @@ describe('DATA: Todos', () => {
     let action;
 
     it(`should send ${constants.TODOS_TOGGLE} to the reducer`, () => {
-      action = todosActions.toggleTodo({ id : 2 });
+      action = todosActions.toggleTodo(2);
       expect(action).toEqual({
         type : constants.TODOS_TOGGLE,
         id   : 2,

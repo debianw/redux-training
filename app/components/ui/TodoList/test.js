@@ -6,7 +6,7 @@ import TodoItem from 'components/ui/TodoItem';
 
 function setup (todos = []) {
   const actions = {
-    onToggleTodo : expect.createSpy(),
+    onTodoClick : expect.createSpy(),
   };
 
   const component = TestUtils.renderIntoDocument(
@@ -43,7 +43,7 @@ describe('COMPONENT: <TodoList />', () => {
     expect(todoItemComponents.length).toBe(2);
   });
 
-  it('should call onToggleTodo when clicking on a <TodoItem />', () => {
+  it('should call onTodoClick when clicking on a <TodoItem />', () => {
     const { todoItemElements, actions } = setup([{
       id        : 1,
       text      : 'First todo',
@@ -55,6 +55,6 @@ describe('COMPONENT: <TodoList />', () => {
     }]);
 
     TestUtils.Simulate.click(todoItemElements[1]);
-    expect(actions.onToggleTodo).toHaveBeenCalledWith({ id : 2 });
+    expect(actions.onTodoClick).toHaveBeenCalledWith(2);
   });
 });

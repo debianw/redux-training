@@ -8,19 +8,17 @@ import './style.scss';
 export default class TodoItem extends Component {
 
   static propTypes = {
-    id        : PropTypes.number,
     completed : PropTypes.bool,
     text      : PropTypes.string,
   };
 
   render () {
-    const { id, completed, text } = this.props;
+    const { completed, text } = this.props;
 
     return (
       <ListGroupItem
         {...this.props}
-        className={completed && 'completed' || ''}
-        key={id}>
+        className={completed && 'completed' || ''}>
           <Label
             bsStyle={completed && 'success' || 'info'}>{ completed ? 'Completed' : 'Pending' }</Label>
           {' '}

@@ -24,7 +24,7 @@ export default class TodoForm extends Component {
               className="new-todo-text"
               type="text"
               value={this.state.newTodoText}
-              onChange={this._handleInputChange} />
+              onChange={e => this.setState({ newTodoText : e.target.value })} />
           </Col>
           <Col xs={12}>
             <Button
@@ -41,10 +41,6 @@ export default class TodoForm extends Component {
     return this.state.newTodoText.trim();
   };
 
-  _handleInputChange = (e) => {
-    this.setState({ newTodoText : e.target.value });
-  };
-
   _onSubmit = (e) => {
     e.preventDefault();
     const value = this._getInputValue();
@@ -53,7 +49,7 @@ export default class TodoForm extends Component {
       return false;
     }
 
-    this.props.onAddTodo({ text : value });
+    this.props.onAddTodo(value);
     this.setState({ newTodoText : '' });
   };
 
